@@ -4,7 +4,7 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 ADMINS = (
     # ('Andsko', 'andsko@cs.spbstu.ru'),
@@ -14,8 +14,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'data.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -25,7 +25,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -57,24 +57,25 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static_root')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+
 # Additional locations of static files
-STATICFILES_DIRS = (
+STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, "static"),)
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-)
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -123,9 +124,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'question',
 )
 
 # A sample logging configuration. The only tangible logging
